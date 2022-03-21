@@ -6,7 +6,7 @@ module.exports = {
       {
         alias: {
           '@src': './src',
-          '@screens': './src/screens',
+          '@screens': './src/screens/index.tsx',
         },
       },
     ],
