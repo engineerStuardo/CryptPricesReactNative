@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["./src/*"],
-      "@screens": ["./src/screens/index.tsx"]
+      "@screens": ["./src/screens/index.tsx"],
+      "@routes": ["src/navigation/routes/index.ts"]
     }
   },
   "exclude": [
