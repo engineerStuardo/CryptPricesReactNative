@@ -1,29 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, FlatList, Pressable, StyleSheet} from 'react-native';
 
 import {routes} from '@src/navigation/routes';
-
 import {Crypto} from '@models';
-
-const cryptoList: Crypto[] = [
-  {
-    id: '1',
-    name: 'BTC',
-    price: 38001.64,
-  },
-  {
-    id: '2',
-    name: 'ETH',
-    price: 4025.0,
-  },
-  {
-    id: '3',
-    name: 'SOL',
-    price: 250.21,
-  },
-];
+import {socket} from '../../App';
 
 export const Home = ({navigation}: {navigation: any}) => {
+  const [cryptoList, setCryptoList] = useState();
+
+  useEffect(() => {
+    socket.on('crypto', data => {
+      setCryptoList(data);
+    });
+  }, []);
+
   const openCryptoDetail = (id: string) => {
     navigation.navigate(routes.Detail, {id});
   };
@@ -31,7 +21,8 @@ export const Home = ({navigation}: {navigation: any}) => {
   const renderItem = ({item}: {item: Crypto}) => (
     <Pressable style={styles.crypto} onPress={() => openCryptoDetail(item.id)}>
       <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>{item.price}</Text>
+      {/* <Text style={styles.price}>{Math.round(item.price * 100) / 100}</Text> */}
+      <Text style={styles.price}>{item.price && item.price.toFixed(2)}</Text>
     </Pressable>
   );
 
