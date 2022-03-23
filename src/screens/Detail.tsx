@@ -10,9 +10,12 @@ import {
 import axios from 'axios';
 import RenderHTML from 'react-native-render-html';
 
+import {CryptoProfileInit, CryptoMarketDataInit} from '@models';
+
 const Detail = ({route}: {route: any}) => {
-  const [cryptoProfile, setCryptoProfile] = useState();
-  const [cryptoMarketData, setCryptoMarketData] = useState();
+  const [cryptoProfile, setCryptoProfile] = useState(CryptoProfileInit);
+  const [cryptoMarketData, setCryptoMarketData] =
+    useState(CryptoMarketDataInit);
   const [isLoading, setIsLoading] = useState(true);
 
   const id = route.params.id;
