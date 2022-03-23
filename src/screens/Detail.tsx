@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+  useWindowDimensions,
+} from 'react-native';
 import axios from 'axios';
+import RenderHTML from 'react-native-render-html';
 
 const Detail = ({route}: {route: any}) => {
   const [cryptoProfile, setCryptoProfile] = useState();
@@ -8,6 +16,8 @@ const Detail = ({route}: {route: any}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const id = route.params.id;
+
+  const {width} = useWindowDimensions();
 
   useEffect(() => {
     const API_URL = 'https://crypto-prices-socket.herokuapp.com';
@@ -62,6 +72,25 @@ const Detail = ({route}: {route: any}) => {
               </Text>
             </View>
           </View>
+          <ScrollView style={styles.cryptoInfo}>
+            <View style={styles.cryptoInfoRow}>
+              <Text style={styles.cryptoInfoTitle}>Overview</Text>
+              <RenderHTML
+                contentWidth={width}
+                source={{
+                  html: `<p style='color: #fff' >${cryptoProfile.profile.general.overview.project_details}</p>`,
+                }}
+              />
+            </View>
+            <View style={styles.cryptoInfoRow}>
+              <RenderHTML
+                contentWidth={width}
+                source={{
+                  html: `<p style='color: #fff' >${cryptoProfile.profile.general.background.background_details}</p>`,
+                }}
+              />
+            </View>
+          </ScrollView>
         </View>
       )}
     </>
@@ -120,6 +149,22 @@ const styles = StyleSheet.create({
   priceChangeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  cryptoInfo: {
+    backgroundColor: '#000',
+    padding: 10,
+    flex: 1,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  cryptoInfoRow: {
+    flex: 1,
+    marginTop: 20,
+  },
+  cryptoInfoTitle: {
+    color: '#ffab00',
+    fontSize: 22,
+    marginBottom: 10,
   },
 });
 
