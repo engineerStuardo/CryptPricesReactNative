@@ -31,7 +31,7 @@ export const Home = ({navigation}: {navigation: any}) => {
       <FlatList
         data={cryptoList}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => `item+${index}`}
       />
     </View>
   );
